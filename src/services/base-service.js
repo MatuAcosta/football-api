@@ -4,11 +4,16 @@ class BaseService {
     }
     
     async getAll(){
-        let response = await this.entityBusiness.getAll();
-        return response
+        try {
+            let response = await this.entityBusiness.getAll();
+            return response  
+        } catch (error) {
+            return error
+        }
+
     }
     async getOne(id){
-        const entity =  this.entityBusiness.getOne(id);
+        const entity =  await this.entityBusiness.getOne(id);
         return entity;
     }
     async create(entity){
@@ -16,19 +21,35 @@ class BaseService {
             const createdEntity =  await this.entityBusiness.create(entity);
             return createdEntity;
        } catch (error) {
-            console.log(error)
+            return error
        }
 
     }
     async update(id,entity){
-        const updatedEntity =  this.entityBusiness.update(id,entity);
-        return updatedEntity;
+        try {
+            const updatedEntity =  await this.entityBusiness.update(id,entity);
+            return updatedEntity;
+        } catch (error) {
+            return error
+        }
+
     }
     async delete(id){
-        return  this.entityBusiness.delete(id);
+        try {
+            const deleted = await this.entityBusiness.delete(id);
+            return deleted  
+        } catch (error) {
+            return error
+        }
+
     }
     async getByName(name){
-        return  this.entityBusiness.getByName(name);
+        try {
+            const entity = await this.entityBusiness.getByName(name);
+            return entity
+        } catch (error) {
+            return error
+        }
     }
 }
 

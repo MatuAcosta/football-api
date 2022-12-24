@@ -9,7 +9,9 @@ class TeamController {
         try {
             let teams = await this.teamsService.getAll();
             teams = teams.map(t => mapper(TeamDTO,t))
-            return res.send(teams)
+            return res.status(200).send({
+                message: 'Teams',
+                data: teams})
         } catch (error) {
             console.log(error)
         }
@@ -22,15 +24,38 @@ class TeamController {
             data: mapper(TeamDTO,teamCreated)
         });
     }
-    updateTeam(req,res){
-        const id = req.id;
-        const body = req.body;
-
-        return this.teamsService.update(id,body)
+    async updateTeam(req,res){
+        try {
+            const id = req.params.id;
+            const body = req.body;
+            const updatedTeam = await this.teamsService.update(id,body);
+            return res.status(201).send({
+                message: 'Updated team',
+                data: updatedTeam
+            })
+        } catch (error) {
+            res.status(400).send({
+                message: 'update error',
+                data: error
+            })            
+        }
     }
-    deleteTeam(){
-        const id = req.id;
-        return this.teamsService.delete(id)
+    async deleteTeam(req,res){
+        try {
+            const id = req.params.id;
+            let deletedTeam = await this.teamsService.delete(id)
+            return res.send({
+                message: 'Team deleted',
+                data: deletedTeam
+            }) 
+        } catch (error) {
+            res.send({
+                message: 'delete error',
+                data: error
+            })
+        }
+
+
     }
 
 
