@@ -5,7 +5,7 @@ class PlayerDomain {
         this.birth_date = new Date()
         this.position = ""
         this.team_id = 0
-        //this.country_id = 0 
+        this.country_id = 0 
     }
 }
 

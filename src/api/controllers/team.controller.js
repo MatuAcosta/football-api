@@ -8,6 +8,7 @@ class TeamController {
     async getTeams(req,res){
         try {
             let teams = await this.teamsService.getAll();
+            console.log(teams)
             teams = teams.map(t => mapper(TeamDTO,t))
             return res.status(200).send({
                 message: 'Teams',

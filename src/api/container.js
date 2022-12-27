@@ -16,6 +16,12 @@ const TeamService = require('../services/team-service');
 const TeamBusiness = require('../domain/team-business');
 const TeamRepository = require('../dal/repositories/team-repository');
 
+const countryRoute = require('./routes/country.route')
+const CountryController = require('./controllers/country.controller');
+const CountryService = require('../services/country-service');
+const CountryBusiness = require('../domain/country-business');
+const CountryRepository = require('../dal/repositories/country-repository');
+
 
 const container = createContainer();
 
@@ -42,5 +48,15 @@ container.register({
     teamsBusiness: asClass(TeamBusiness).singleton(),
     teamsRepository: asClass(TeamRepository).singleton()
 })
+
+container.register({
+    countryRoute: asFunction(countryRoute).singleton(),
+    countryController: asClass(CountryController).singleton(),
+    countryService: asClass(CountryService).singleton(),
+    countryBusiness: asClass(CountryBusiness).singleton(),
+    countryRepository: asClass(CountryRepository).singleton()
+})
+
+
 
 module.exports = container;

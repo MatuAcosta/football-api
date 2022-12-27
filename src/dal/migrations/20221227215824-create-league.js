@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Teams', {
+    await queryInterface.createTable('Leagues', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,21 +10,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
-      league_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true
+      logo: {
+        type: Sequelize.STRING
       },
       country_id:{
         type: Sequelize.INTEGER,
-        allowNull:true,
+        allowNull:true
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Teams');
+    await queryInterface.dropTable('Leagues');
   }
 };
-//20221223215112-create-team.js
