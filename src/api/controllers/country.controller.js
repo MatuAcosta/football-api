@@ -69,7 +69,7 @@ class CountryController {
     async getOneById(req,res){
         try {
             const id = req.params.id
-            let player = await this.countryService.getOne(id);
+            let country = await this.countryService.getOne(id);
             console.log(country)
             if(!country) throw {error}
             return res.send({

@@ -12,6 +12,9 @@ class Server {
 
     start(){
         this.express.use(bp.json());
+        this.express.use(bp.urlencoded({
+            extended:true
+        })); 
         return new Promise((resolve,reject) => {
             const http = this.express.listen(3000, () => {
                 const {port} = http.address();

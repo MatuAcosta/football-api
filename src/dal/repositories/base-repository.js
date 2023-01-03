@@ -10,7 +10,15 @@ class BaseRepository {
     }
 
     async create(body){
-        return await this.db[this.entity].create(body);
+        try {
+            let entity =  await this.db[this.entity].create(body);
+            return entity
+        } catch (error) {
+            return {
+                error: true,
+                detail: error.name
+            }
+        }
     }
 
     async update(id,body){

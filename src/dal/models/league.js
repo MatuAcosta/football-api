@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      League.hasMany('Teams',{
+      League.hasMany(models.Team,{
         foreignKey:'league_id'
       })
-      League.belongsTo('Country',{
+      League.belongsTo(models.Country,{
         foreignKey:'country_id'
       })
     }
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'League',
+    timestamps:false
   });
   return League;
 };

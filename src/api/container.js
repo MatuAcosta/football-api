@@ -21,6 +21,11 @@ const CountryController = require('./controllers/country.controller');
 const CountryService = require('../services/country-service');
 const CountryBusiness = require('../domain/country-business');
 const CountryRepository = require('../dal/repositories/country-repository');
+const leagueRoute = require('./routes/league.route');
+const LeagueController = require('./controllers/league.controller');
+const LeagueService = require('../services/league-service');
+const LeagueBusiness = require('../domain/league-business');
+const LeagueRepository = require('../dal/repositories/league-repository');
 
 
 const container = createContainer();
@@ -57,6 +62,13 @@ container.register({
     countryRepository: asClass(CountryRepository).singleton()
 })
 
+container.register({
+    leagueRoute: asFunction(leagueRoute).singleton(),
+    leagueController: asClass(LeagueController).singleton(),
+    leagueService: asClass(LeagueService).singleton(),
+    leagueBusiness: asClass(LeagueBusiness).singleton(),
+    leagueRepository: asClass(LeagueRepository).singleton()
+})
 
 
 module.exports = container;

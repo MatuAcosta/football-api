@@ -25,6 +25,7 @@ class BaseBusiness {
     async create(entity){
         try {
             const createdEntity =  await this.entityRepository.create(entity);
+            if (createdEntity.error) throw createdEntity
             return mapper(this.entityToMap,createdEntity)
         } catch (error) {
             return error

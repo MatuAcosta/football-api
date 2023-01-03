@@ -3,7 +3,7 @@ const {Router} = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-module.exports = function({playersRoute,teamsRoute,countryRoute}) {  
+module.exports = function({playersRoute,teamsRoute,countryRoute,leagueRoute}) {  
     const router = Router();
     const apiRoute = Router();
     apiRoute
@@ -15,6 +15,7 @@ module.exports = function({playersRoute,teamsRoute,countryRoute}) {
     apiRoute.use('/players', playersRoute);
     apiRoute.use('/teams',teamsRoute);
     apiRoute.use('/countries',countryRoute)
+    apiRoute.use('/leagues',leagueRoute)
     router.use('/',apiRoute);
     return router;
 }
