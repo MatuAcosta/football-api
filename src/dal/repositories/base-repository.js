@@ -5,8 +5,17 @@ class BaseRepository {
     }
     
     async getAll(){
-        let response = await this.db[this.entity].findAll()
-        return response
+        try {
+            let response = await this.db[this.entity].findAll()
+            return response
+        } catch (error) {
+            console.log(error);
+            return {
+                error: true,
+                detail: error.name
+            }
+        }
+
     }
 
     async create(body){
@@ -38,11 +47,22 @@ class BaseRepository {
     }
 
     async getOne(id) {
-        return await this.db[this.entity].findOne({
-            where:{
-                id
+        try {
+            let entity =  await this.db[this.entity].findOne({
+                where:{
+                    id
+                }
+            })
+            return entity
+        } catch (error) {
+            return {
+                error:true,
+                detail: error.name
             }
-        })
+        }
+
+
+
     }
     async getByName(name){
         return await this.db[this.entity].findOne({

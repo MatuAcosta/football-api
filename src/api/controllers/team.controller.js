@@ -8,22 +8,33 @@ class TeamController {
     async getTeams(req,res){
         try {
             let teams = await this.teamsService.getAll();
-            console.log(teams)
+            if(teams.error) throw {code: 500 , msg: teams.detail};
             teams = teams.map(t => mapper(TeamDTO,t))
             return res.status(200).send({
                 message: 'Teams',
                 data: teams})
         } catch (error) {
-            console.log(error)
+            return res.status(error.code).send({
+                message: error.msg
+            })
         }
     }
     async createTeam(req,res){
-        const body = req.body;
-        const teamCreated = await this.teamsService.create(body)
-        return res.status(200).send({
-            message:'Exito',
-            data: mapper(TeamDTO,teamCreated)
-        });
+        try {
+            const body = req.body;
+            const teamCreated = await this.teamsService.create(body);
+            console.log(teamCreated)
+            if(teamCreated.error) throw {code: 500, msg: teamCreated.detail};
+            return res.status(200).send({
+                message:'Exito',
+                data: mapper(TeamDTO,teamCreated)
+            });
+        } catch (error) {
+            return res.status(error.code).send({
+                message:error.msg
+            })
+        }
+
     }
     async updateTeam(req,res){
         try {

@@ -9,6 +9,7 @@ class BaseBusiness {
     async getAll(){
         try {
             let entities = await this.entityRepository.getAll();
+            if(entities.error) throw entities ;
             return entities.map(entity => mapper(this.entityToMap,entity)); 
         } catch (error) {
             return error
@@ -16,9 +17,16 @@ class BaseBusiness {
 
     }
     async getOne(id){
-        const entity = await this.entityRepository.getOne(id);
-        if(entity) return mapper(this.entityToMap,entity);
-        return entity
+        try {
+            const entity = await this.entityRepository.getOne(id);
+            if(!entity) return false 
+            if(entity.error) throw entity 
+            if(entity) return mapper(this.entityToMap,entity);
+        } catch (error) {
+            return error 
+        }
+
+
 
     }
 

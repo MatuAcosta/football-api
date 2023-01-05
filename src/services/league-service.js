@@ -8,6 +8,7 @@ class LeagueService extends BaseService{
     }
 
     async getCountryOfALeagueByName(name){
+        countryName = countryName.toUpperCase();
         let country = await this.countryService.getByName(name);
         if(country) return country.id 
         if(!country) return null 

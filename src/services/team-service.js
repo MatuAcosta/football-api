@@ -8,18 +8,19 @@ class TeamService extends BaseService{
     }
 
     async getCountryOfATeamByName(countryName){
+        countryName = countryName.toUpperCase();
         let country = await this.countryService.getByName(countryName);
         return country.id 
     }
     async getCountryOfATeamById(country_id){
         let country = await this.countryService.getOne(country_id);
-        console.log(country)
         return country.name 
     }
 
     async getAll(){
         try {
             let teams = await super.getAll();
+            if(teams.error) throw teams;
             for (const t of teams){
                 if(t.country_id) t.country = await this.getCountryOfATeamById(t.country_id);
             }
@@ -32,6 +33,7 @@ class TeamService extends BaseService{
     async getOne(id){
         try {
             let team = await super.getOne(id);
+            if(team.error) throw team
             if(team.country_id ) team.country = await this.getCountryOfATeamById(team.country_id)
             return team
         } catch (error) {
@@ -42,9 +44,14 @@ class TeamService extends BaseService{
 
     async create(body){
         try {
-            let countryTeam = await this.getCountryOfATeamByName(body.country); 
-            if(countryTeam) body.country_id = countryTeam;
+            body.country_id = null ;
+            let countryTeam; 
+            if(body.country){
+                let countryTeam = await this.getCountryOfATeamByName(body.country); 
+                countryTeam ? body.country_id = countryTeam : null ;
+            } 
             let createdTeam = await super.create(body);
+            if(createdTeam.error) throw createdTeam
             return createdTeam
         } catch (error) {
             return error

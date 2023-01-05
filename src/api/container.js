@@ -28,6 +28,8 @@ const LeagueBusiness = require('../domain/league-business');
 const LeagueRepository = require('../dal/repositories/league-repository');
 
 
+const RequestMiddleware = require('./middleware/requestMiddleware');
+
 const container = createContainer();
 
 container.register({
@@ -70,5 +72,8 @@ container.register({
     leagueRepository: asClass(LeagueRepository).singleton()
 })
 
+container.register({
+    requestMiddleware: asClass(RequestMiddleware).singleton()
+})
 
 module.exports = container;

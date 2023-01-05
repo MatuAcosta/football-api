@@ -11,14 +11,16 @@ class PlayerController {
     async getPlayers(req,res){
         try {
             let players = await this.playerService.getAll();
-            console.log(players)
+            if(players.error) throw {error: 500 , msg: players.detail}
             players = players.map(p => mapper(PlayerDTO,p))
             return res.status(200).send({
                 message:'Players',
                 data:players
             })
         } catch (error) {
-            console.log(error)
+            return res.status(error.code).send({
+                message: error.msg
+            })
         }
     }
     async createPlayer(req,res){
@@ -70,19 +72,23 @@ class PlayerController {
         try {
             const id = req.params.id
             let player = await this.playerService.getOne(id);
-            console.log(player)
-            if(!player) throw {error}
-            return res.send({
-                message:'One player by id',
-                data:player
+            
+            if(player.error) throw {code: 500 , msg: player.message} //handle error
+            let message = ''; 
+            !player ?  message = 'Player not found' :  message = 'One player by id' 
+            return res.status(200).send({
+                message,
+                data: player ? mapper(PlayerDTO,player) : {}
             })
+
         } catch (error) {
-            return res.send({
-                message:'Error',
-                data:error
+            return res.status(error.code).send({
+                message:error.msg
             })
         }
     }
+
+    
 
 
 }

@@ -17,11 +17,13 @@ class PlayerService extends BaseService{
 
     //we use this function to get the player's team name and show it to the user
     async getTeamOfAPlayer(team_id){
+        if(!team_id) return null 
         let team = await this.teamsService.getOne(team_id);
         return team.name
     }
     //we use this function to get the player's country name and show it to the user
     async getCountryOfAplayer(country_id){
+        if(!country_id) return null 
         let country = await this.countryService.getOne(country_id);
         return country.name 
     }
@@ -65,7 +67,7 @@ class PlayerService extends BaseService{
         try {
             body.birth_date = new Date(body.birth_date);
             try {
-                let [team,country] = Promise.all([this.teamsService.getByName(body.team), this.countryService.getByName(body.country)]);
+                let [team,country] = await Promise.all([this.teamsService.getByName(body.team), this.countryService.getByName(body.country)]);
                 if(team) body.team_id = team.id;
                 if(country) body.country_id = country.id
             } catch (error) {
@@ -73,7 +75,7 @@ class PlayerService extends BaseService{
                 return error
             }
             const createdPlayer = await super.create(body);
-            if(!createdPlayer) throw {msg:'error'}
+            if(createdPlayer.error) throw createdPlayer
             return createdPlayer
         } catch (error) {
             return error
@@ -84,7 +86,8 @@ class PlayerService extends BaseService{
     async getOne(id){
         try {
             let p = await super.getOne(id);
-            if(!p) throw {error:'Player not found'}
+            if(!p) return false
+            if(p.error) throw p
             if(p.team_id) p.team = await this.getTeamOfAPlayer(p.team_id);
             if(p.country_id) p.country = await this.getCountryOfAplayer(p.country_id);
             p.age = this.calculateAge(p.birth_date)

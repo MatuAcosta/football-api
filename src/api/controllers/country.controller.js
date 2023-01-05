@@ -11,14 +11,16 @@ class CountryController {
     async getCountries(req,res){
         try {
             let countries = await this.countryService.getAll();
-            console.log(countries)
+            if(countries.error) throw {code: 500, msg: countries.detail}
             countries = countries.map(p => mapper(CountryDTO,p))
             return res.status(200).send({
                 message:'Countries',
                 data:countries
             })
         } catch (error) {
-            console.log(error)
+            return res.status(error.code).send({
+                message: error.msg
+            })
         }
     }
     async createCountry(req,res){

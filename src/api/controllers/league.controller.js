@@ -12,7 +12,7 @@ class LeagueController {
     async getLeagues(req,res){
         try {
             let leagues = await this.leagueService.getAll();
-            console.log(leagues)
+            if(leagues.error) throw {code: 500 , msg: leagues.detail}
             for (const l of leagues) {
                 let base64 = l.logo.toString('base64');
                 l.logo = base64;            
@@ -23,7 +23,9 @@ class LeagueController {
                 data:leagues
             })
         } catch (error) {
-            console.log(error)
+            return res.status(error.code).send({
+                message: error.msg
+            })
         }
     }
     async createLeague(req,res){
