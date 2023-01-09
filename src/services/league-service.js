@@ -8,7 +8,7 @@ class LeagueService extends BaseService{
     }
 
     async getCountryOfALeagueByName(name){
-        countryName = countryName.toUpperCase();
+        name = name.toUpperCase();
         let country = await this.countryService.getByName(name);
         if(country) return country.id 
         if(!country) return null 
@@ -17,8 +17,10 @@ class LeagueService extends BaseService{
 
     async create(body){
         try {
-            let country = await this.getCountryOfALeagueByName(body.country);
-            if (country) body.country_id = country ;
+            if(body.country){
+                let country = await this.getCountryOfALeagueByName(body.country);
+                if (country) body.country_id = country ;
+            }
             let createdLeague = await super.create(body);
             return createdLeague 
         } catch (error) {

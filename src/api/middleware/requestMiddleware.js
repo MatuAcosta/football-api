@@ -1,7 +1,7 @@
 class RequestMiddleware {
     constructor(){}
 
-    verifyNameBody(req,res,next){
+    verifyTeamBody(req,res,next){
         let body = req.body ; 
         if(!body.name){
             return res.status(400).send({
@@ -22,6 +22,16 @@ class RequestMiddleware {
     verifyPlayerBody(req,res,next){
         let body = req.body ; 
         if (!body.name || !body.birth_date || !body.position){
+            return res.status(400).send({
+                message: 'Invalid Parameters'
+            })
+        }
+        next();
+    }
+
+    verifyLeagueBody(req,res,next){
+        let body = req.body;
+        if(!body.name || !req.file){
             return res.status(400).send({
                 message: 'Invalid Parameters'
             })

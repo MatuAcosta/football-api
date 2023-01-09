@@ -23,6 +23,7 @@ class BaseRepository {
             let entity =  await this.db[this.entity].create(body);
             return entity
         } catch (error) {
+            console.log(error);
             return {
                 error: true,
                 detail: error.name

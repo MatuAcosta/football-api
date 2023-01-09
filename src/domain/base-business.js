@@ -34,7 +34,7 @@ class BaseBusiness {
         try {
             const createdEntity =  await this.entityRepository.create(entity);
             if (createdEntity.error) throw createdEntity
-            return mapper(this.entityToMap,createdEntity)
+            return createdEntity
         } catch (error) {
             return error
         }

@@ -12,6 +12,7 @@ module.exports = function({playersRoute,teamsRoute,countryRoute,leagueRoute}) {
         extended: true 
      }))
     .use(cors())
+    //apiRoute.use('/search',searchRoute);
     apiRoute.use('/players', playersRoute);
     apiRoute.use('/teams',teamsRoute);
     apiRoute.use('/countries',countryRoute)

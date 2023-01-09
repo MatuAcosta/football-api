@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      logo: {
+        type: Sequelize.BLOB, 
+        allowNull: false
+      },
       league_id: {
         type: Sequelize.INTEGER,
         allowNull: true

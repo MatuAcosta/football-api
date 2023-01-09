@@ -1,7 +1,8 @@
 class TeamsDTO {
     constructor(){
-        this.name = "",
-        this.league = "",
+        this.name = ""
+        //this.logo = ""
+        this.league = ""
         this.country = ""
     }
 }

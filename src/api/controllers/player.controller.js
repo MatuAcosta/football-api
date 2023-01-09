@@ -27,12 +27,16 @@ class PlayerController {
         try {
             const body = req.body;
             const createdPlayer = await this.playerService.create(body);
+            if(createdPlayer.error) throw {code: 500, msg: createdPlayer.detail}
             return res.status(201).send({
                 message: 'Player created',
                 data: createdPlayer
             })
         } catch (error) {
             console.log(error)
+            return res.status(error.code).send({
+                message:error.msg
+            })
         }
 
     }

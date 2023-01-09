@@ -31,17 +31,18 @@ class LeagueController {
     async createLeague(req,res){
         try {
             let body = req.body;
-            if (!Object.hasOwn(body,'name') || !req.file) throw {msg: 'Invalid Parameters', code: 400}
             const path = './uploads/'+ req.file.filename
             body.logo = this.readImage(path)
             let  createdLeague = await this.leagueService.create(body);
+            console.log(createdLeague)
             if(createdLeague.error) throw {code: 500, msg: createdLeague.detail};
             createdLeague = mapper(LeagueDTO,createdLeague);
             return res.status(201).send({
                 message: 'Created League',
-                data: createdLeague
+                data: mapper(LeagueDTO,createdLeague)
             })
         } catch (error) {
+            console.log(error);
             return res.status(error.code).send({
                 message: error.msg
             });
