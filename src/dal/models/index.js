@@ -1,24 +1,13 @@
 'use strict';
-require('dotenv').config();
+
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-//const config = require(__dirname + '/../../config/index.js')[env];
+const config = require(__dirname + '/../../config/index.js')[env];
 const db = {};
-const config = {
-  username: 'postgres',
-  password: process.env.PASSWORD,
-  database: process.env.DB,
-  host: process.env.HOST,
-  dialect: "postgres",
-  timestamps:false
-    
-}
-
-
 
 let sequelize;
 /* if (config.use_env_variable) {
@@ -27,7 +16,7 @@ let sequelize;
   console.log('aca')
 }
  */
-sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 fs
   .readdirSync(__dirname)
