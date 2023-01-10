@@ -9,7 +9,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../../config/index.js')[env];
 const db = {};
 //const sequelize = new Sequelize('postgres://matias:KIkEhHgp2M2pP4CZXAfiMkIsfcc6iM1X@dpg-ceuu5pta4993aigc6350-a.oregon-postgres.render.com:5432/footballapi?ssl=true') // Example for postgres
-const sequelize = new Sequelize('postgres://matias:KIkEhHgp2M2pP4CZXAfiMkIsfcc6iM1X@dpg-ceuu5pta4993aigc6350-a/footballapi?ssl=true')
+const sequelize = new Sequelize('postgres://matias:KIkEhHgp2M2pP4CZXAfiMkIsfcc6iM1X@dpg-ceuu5pta4993aigc6350-a/footballapi')
 fs
   .readdirSync(__dirname)
   .filter(file => {
