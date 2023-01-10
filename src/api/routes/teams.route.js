@@ -12,6 +12,7 @@ const upload = multer({storage:storage})
 module.exports = function({teamsController,requestMiddleware}) {  
     const router = Router();
     router.get('', teamsController.getTeams.bind(teamsController));
+    router.get('/league/:league',teamsController.getTeamsByLeague.bind(teamsController));
     router.get('/:id', teamsController.getOneById.bind(teamsController));
     router.post('',[upload.single('logo'),requestMiddleware.verifyTeamBody],teamsController.createTeam.bind(teamsController));
     router.put('/:id',[upload.single('logo')],teamsController.updateTeam.bind(teamsController));

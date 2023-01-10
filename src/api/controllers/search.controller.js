@@ -1,5 +1,3 @@
-require('dotenv').config()
-let axios = require('axios');
 class SearchController {
     constructor({leagueService,teamsService,playerService,countryService}){
 

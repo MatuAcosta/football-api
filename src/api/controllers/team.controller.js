@@ -80,7 +80,7 @@ class TeamController {
 
     async getOneById(req,res){
         try {
-            const id = req.params.id
+            const id = req.params.id ;
             let team = await this.teamsService.getOne(id);
             let base64 = team.logo.toString('base64');
             team.logo = base64;
@@ -97,6 +97,30 @@ class TeamController {
         }
     }
 
+
+    async getTeamsByLeague(req,res){
+        try {
+            const league = req.params.league;
+            console.log(league)
+            let teams = await this.teamsService.getTeamsByLeague(league);
+            console.log('TEAMS',teams)
+            if(teams.error) throw {code: 500 , msg: teams.detail};
+/*             for (const t of teams) {
+                let base64 = t.logo.toString('base64');
+                t.logo = base64;            
+            } */
+            teams = teams.map(t => mapper(TeamDTO,t))
+            return res.status(200).send({
+                message: 'Teams',
+                data: teams})
+        } catch (error) {
+            console.log(error)
+            return res.status(error.code).send({
+                message: 'Error',
+                data: error
+            })
+        }
+    }
 
     readImage(path){
         return fs.readFileSync(path);

@@ -97,6 +97,20 @@ class TeamService extends BaseService{
         }
     }
 
+    async getTeamsByLeague(league){
+        try {
+            let teams = await this.teamsBusiness.getTeamsByLeague(league);
+            if (teams.error) throw teams
+            for (const t of teams){
+                if(t.country_id) t.country = await this.getCountryOfATeamById(t.country_id);
+                if(t.league_id) t.league = await this.getLeagueOfATeamById(t.league_id);
+            }
+            return teams
+        } catch (error) {
+            return error
+        }
+    }
+
 }
 
 module.exports = TeamService

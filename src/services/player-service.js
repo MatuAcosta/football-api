@@ -61,8 +61,7 @@ class PlayerService extends BaseService{
             if(body.team){
                 let team = await this.getTeamOfAPlayerByName(body.team);
                 if(team) body.team_id = team.id;
-                console.log('TEAM', team)
-                console.log('BODY', body.team)
+
             }
             if (body.country){
                 let country = await this.getCountryOfAPlayerByName(body.country)
