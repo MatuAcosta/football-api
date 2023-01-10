@@ -6,6 +6,15 @@ class PlayerBusiness extends BaseBusiness {
         super(playerRepository,PlayerDomain);
         this.playerRepository = playerRepository;
     }
+   async getPlayersByName(team){
+    try {
+        let entity = await this.playerRepository.getPlayersByTeam(team);
+        if(entity.error) throw entity
+        return entity
+    } catch (error) {
+        return error
+    }
+   }
 }
 
 module.exports = PlayerBusiness

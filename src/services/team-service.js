@@ -26,6 +26,7 @@ class TeamService extends BaseService{
     async getLeagueOfATeamByName(league){
         league = league.toUpperCase();
         let leagueTeam = await this.leagueService.getByName(league);
+        console.log("LeagueTeam",leagueTeam);
         if(leagueTeam) return leagueTeam.id;
         return null
     }
@@ -84,6 +85,11 @@ class TeamService extends BaseService{
                 let country = await this.getCountryOfATeamByName(body.country);
                 if (country) body.country_id = country;
             }
+            if(body.league){
+                let league = await this.getLeagueOfATeamByName(body.league);
+                if(league) body.league_id = league
+            }
+            console.log('BODY',body);
             let updatedTeam = await super.update(id,body);
             return updatedTeam
         } catch (error) {

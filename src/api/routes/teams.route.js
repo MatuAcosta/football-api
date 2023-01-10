@@ -14,7 +14,7 @@ module.exports = function({teamsController,requestMiddleware}) {
     router.get('', teamsController.getTeams.bind(teamsController));
     router.get('/:id', teamsController.getOneById.bind(teamsController));
     router.post('',[upload.single('logo'),requestMiddleware.verifyTeamBody],teamsController.createTeam.bind(teamsController));
-    router.put('/:id',teamsController.updateTeam.bind(teamsController));
+    router.put('/:id',[upload.single('logo')],teamsController.updateTeam.bind(teamsController));
     router.delete('/:id',teamsController.deleteTeam.bind(teamsController));
     return router;
 }

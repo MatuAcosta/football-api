@@ -1,9 +1,16 @@
+require('dotenv').config()
+let axios = require('axios');
 class SearchController {
-    constructor(){
+    constructor({leagueService,teamsService,playerService,countryService}){
+
     }
     
     getQuery(req,res){
-        console.log(req.query);
+        return res.json({
+            message: req.query
+        })
     }
 
 }
+
+module.exports = SearchController;

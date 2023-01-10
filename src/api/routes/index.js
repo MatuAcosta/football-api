@@ -3,7 +3,7 @@ const {Router} = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-module.exports = function({playersRoute,teamsRoute,countryRoute,leagueRoute}) {  
+module.exports = function({playersRoute,teamsRoute,countryRoute,leagueRoute,searchRoute}) {  
     const router = Router();
     const apiRoute = Router();
     apiRoute
@@ -12,7 +12,7 @@ module.exports = function({playersRoute,teamsRoute,countryRoute,leagueRoute}) {
         extended: true 
      }))
     .use(cors())
-    //apiRoute.use('/search',searchRoute);
+    apiRoute.use('/search',searchRoute);
     apiRoute.use('/players', playersRoute);
     apiRoute.use('/teams',teamsRoute);
     apiRoute.use('/countries',countryRoute)

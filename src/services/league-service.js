@@ -28,6 +28,20 @@ class LeagueService extends BaseService{
         }
 
     }
+    async update(id,body){
+        try {
+            if(body.country){
+                let country = await this.getCountryOfALeagueByName(body.country);
+                if (country) body.country_id = country ;
+            }
+            if(body.name) body.name = body.name.toUpperCase();
+            let createdLeague = await super.update(id,body);
+            return createdLeague 
+        } catch (error) {
+            return error
+        }
+
+    }
 }
 
 module.exports = LeagueService

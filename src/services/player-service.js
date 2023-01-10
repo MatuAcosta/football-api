@@ -28,6 +28,16 @@ class PlayerService extends BaseService{
         return country.name 
     }
 
+    async getTeamOfAPlayerByName(teamName){
+        let team = await this.teamsService.getByName(teamName.toUpperCase());
+        if(team) return team
+        return null
+    }
+    async getCountryOfAPlayerByName(countryName){
+        let country = await this.countryService.getByName(countryName.toUpperCase());
+        if(country) return country
+        return null
+    }
 
     //como lo requerido es el la fecha de nacimiento del jugador
     // en este caso debemos calcular la edad de cada uno para poder mostrar al usuario su edad
@@ -49,11 +59,13 @@ class PlayerService extends BaseService{
     async update(id,body){
         try {
             if(body.team){
-                let team = await this.teamsService.getByName(body.team);
+                let team = await this.getTeamOfAPlayerByName(body.team);
                 if(team) body.team_id = team.id;
+                console.log('TEAM', team)
+                console.log('BODY', body.team)
             }
             if (body.country){
-                let country = await this.countryService.getByName(body.country);
+                let country = await this.getCountryOfAPlayerByName(body.country)
                 if(country) body.country_id = country.id;
             }
             let updated = await super.update(id,body);
@@ -67,7 +79,7 @@ class PlayerService extends BaseService{
         try {
             body.birth_date = new Date(body.birth_date);
             try {
-                let [team,country] = await Promise.all([this.teamsService.getByName(body.team), this.countryService.getByName(body.country)]);
+                let [team,country] = await Promise.all([this.getTeamOfAPlayerByName(body.team),this.getCountryOfAPlayerByName(body.country)]);
                 if(team) body.team_id = team.id;
                 if(country) body.country_id = country.id
             } catch (error) {
@@ -96,6 +108,21 @@ class PlayerService extends BaseService{
             return error
         }
 
+    }
+
+    async getPlayersByTeam(team){
+        try {
+            let players = await this.playerBusiness.getPlayersByName(team)
+            if(players.error) throw players
+            for (const p of players) {
+                p.age = this.calculateAge(p.birth_date)
+                if(p.team_id) p.team = await this.getTeamOfAPlayer(p.team_id);
+                if(p.country_id) p.country = await this.getCountryOfAplayer(p.country_id);
+            }
+            return players
+        } catch (error) {
+            return error
+        }
     }
 
 }

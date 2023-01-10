@@ -12,7 +12,8 @@ class LeagueController {
     async getLeagues(req,res){
         try {
             let leagues = await this.leagueService.getAll();
-            if(leagues.error) throw {code: 500 , msg: leagues.detail}
+            if(leagues.error) throw {code: 500 , msg: leagues.detail};
+            console.log(leagues)
             for (const l of leagues) {
                 let base64 = l.logo.toString('base64');
                 l.logo = base64;            
@@ -23,6 +24,7 @@ class LeagueController {
                 data:leagues
             })
         } catch (error) {
+            console.log(error)
             return res.status(error.code).send({
                 message: error.msg
             })
@@ -60,7 +62,7 @@ class LeagueController {
             }
             const updatedLeague = await this.leagueService.update(id,body);
             return res.status(201).send({
-                message: 'Updated Country',
+                message: 'Updated League',
                 data: updatedLeague
             })
         } catch (error) {

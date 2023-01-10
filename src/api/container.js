@@ -27,8 +27,9 @@ const LeagueService = require('../services/league-service');
 const LeagueBusiness = require('../domain/league-business');
 const LeagueRepository = require('../dal/repositories/league-repository');
 
-
 const RequestMiddleware = require('./middleware/requestMiddleware');
+const searchRoute = require('./routes/search.route');
+const SearchController = require('./controllers/search.controller');
 
 const container = createContainer();
 
@@ -70,6 +71,11 @@ container.register({
     leagueService: asClass(LeagueService).singleton(),
     leagueBusiness: asClass(LeagueBusiness).singleton(),
     leagueRepository: asClass(LeagueRepository).singleton()
+})
+
+container.register({
+    searchRoute: asFunction(searchRoute).singleton(),
+    searchController: asClass(SearchController).singleton()
 })
 
 container.register({

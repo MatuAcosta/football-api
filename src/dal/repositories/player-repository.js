@@ -7,6 +7,21 @@ class PlayerRepository extends BaseRepository{
         this.db = db;
     }
 
+    async getPlayersByTeam(team_id){
+        try {
+            let players = await this.db['Player'].findAll({
+                where:{
+                    team_id
+                }
+            })
+            return players
+        } catch (error) {
+            return {
+                error: true,
+                detail: error.name
+            }
+        }
+    }
 
 }
 

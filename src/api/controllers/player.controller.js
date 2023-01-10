@@ -23,6 +23,28 @@ class PlayerController {
             })
         }
     }
+
+    async getPlayersByTeam(req,res){
+        try {
+            let team = req.params.team
+            if(!team) throw {code:400, message: 'Invalid parameters'}
+            let players = await this.playerService.getPlayersByTeam(team);
+            console.log(players)
+            if(players.error) throw {error: 500 , msg: players.detail}
+            players = players.map(p => mapper(PlayerDTO,p))
+            return res.status(200).send({
+                message:'Players',
+                data:players
+            })
+        } catch (error) {
+            console.log(error)
+            return res.status(error.code).send({
+                message: error.msg
+            })
+        }
+    }
+
+
     async createPlayer(req,res){
         try {
             const body = req.body;
