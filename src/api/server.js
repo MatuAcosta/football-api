@@ -7,7 +7,7 @@ class Server {
     constructor({router}){
         this.express = express();
         this.express.use(router);
-        this.PORT = process.env.PORT_API || 3000;
+        this.PORT = process.env.PORT || 3000;
     }
 
     start(){
