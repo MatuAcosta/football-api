@@ -28,9 +28,10 @@ class TeamController {
     }
     async createTeam(req,res){
         try {
+            console.log(req.file);
             let body = req.body;
-            const path = './uploads/teams/'+ req.file.filename ; 
-            body.logo = this.readImage(path)
+            //const path = './uploads/teams/'+ req.file.filename ; 
+            //body.logo = this.readImage(path)
             const teamCreated = await this.teamsService.create(body);
             if(teamCreated.error) throw {code: 500, msg: teamCreated.detail};
             return res.status(200).send({

@@ -35,6 +35,7 @@ class LeagueController {
             let body = req.body;
             const path = './uploads/'+ req.file.filename
             body.logo = this.readImage(path)
+            console.log('LOGO',body.logo)
             let  createdLeague = await this.leagueService.create(body);
             console.log(createdLeague)
             if(createdLeague.error) throw {code: 500, msg: createdLeague.detail};
