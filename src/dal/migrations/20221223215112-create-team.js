@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false
       },
       logo: {
-        type: Sequelize.BLOB, 
+        type: Sequelize.STRING, 
         allowNull: false
       },
       league_id: {

@@ -9,12 +9,7 @@ class TeamController {
     async getTeams(req,res){
         try {
             let teams = await this.teamsService.getAll();
-            console.log(teams)
             if(teams.error) throw {code: 500 , msg: teams.detail};
-/*             for (const t of teams) {
-                let base64 = t.logo.toString('base64');
-                t.logo = base64;            
-            } */
             teams = teams.map(t => mapper(TeamDTO,t))
             return res.status(200).send({
                 message: 'Teams',
@@ -30,8 +25,7 @@ class TeamController {
         try {
             console.log(req.file);
             let body = req.body;
-            //const path = './uploads/teams/'+ req.file.filename ; 
-            //body.logo = this.readImage(path)
+            body.logo = req.file.path;
             const teamCreated = await this.teamsService.create(body);
             if(teamCreated.error) throw {code: 500, msg: teamCreated.detail};
             return res.status(200).send({
