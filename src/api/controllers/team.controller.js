@@ -77,8 +77,6 @@ class TeamController {
         try {
             const id = req.params.id ;
             let team = await this.teamsService.getOne(id);
-            let base64 = team.logo.toString('base64');
-            team.logo = base64;
             if(!team) throw {error}
             return res.send({
                 message:'One team by id',
@@ -100,10 +98,6 @@ class TeamController {
             let teams = await this.teamsService.getTeamsByLeague(league);
             console.log('TEAMS',teams)
             if(teams.error) throw {code: 500 , msg: teams.detail};
-/*             for (const t of teams) {
-                let base64 = t.logo.toString('base64');
-                t.logo = base64;            
-            } */
             teams = teams.map(t => mapper(TeamDTO,t))
             return res.status(200).send({
                 message: 'Teams',
