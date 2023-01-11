@@ -41,7 +41,7 @@ module.exports = {
     port: 5432,
 /*     dialectOptions:{
       ssl:true
-    } */
+    } 
   }
   
   
