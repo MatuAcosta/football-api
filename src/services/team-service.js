@@ -89,7 +89,6 @@ class TeamService extends BaseService{
                 let league = await this.getLeagueOfATeamByName(body.league);
                 if(league) body.league_id = league
             }
-            console.log('BODY',body);
             let updatedTeam = await super.update(id,body);
             return updatedTeam
         } catch (error) {
