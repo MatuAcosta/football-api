@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       logo: {
-        type: Sequelize.STRING
+        type: Sequelize.BLOB
       },
       country_id:{
         type: Sequelize.INTEGER,
@@ -25,3 +25,4 @@ module.exports = {
     await queryInterface.dropTable('Leagues');
   }
 };
+//20221227215824-create-league.js
