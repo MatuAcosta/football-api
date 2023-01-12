@@ -21,6 +21,29 @@ class TeamController {
             })
         }
     }
+
+    async getTeamsByLeague(req,res){
+        try {
+            let league = req.params.league
+            if(!league) throw {code:400, message: 'Invalid parameters'}
+            let teams = await this.teamsService.getTeamsByLeague(league);
+            if(teams.error) throw {error: 500 , msg: teams.detail}
+            teams = teams.map(p => mapper(TeamDTO,p))
+            return res.status(200).send({
+                message:`Teams`,
+                data:teams
+            })
+        } catch (error) {
+            console.log(error)
+            return res.status(error.code).send({
+                message: error.msg
+            })
+        }
+    }
+
+
+
+
     async createTeam(req,res){
         try {
             console.log(req.file);

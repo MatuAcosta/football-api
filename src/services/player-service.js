@@ -111,11 +111,12 @@ class PlayerService extends BaseService{
 
     async getPlayersByTeam(team){
         try {
-            let players = await this.playerBusiness.getPlayersByName(team)
+            let players = await this.playerBusiness.getPlayersByTeam(team)
             if(players.error) throw players
+            let teamName = await this.getTeamOfAPlayer(team)
             for (const p of players) {
                 p.age = this.calculateAge(p.birth_date)
-                if(p.team_id) p.team = await this.getTeamOfAPlayer(p.team_id);
+                p.team = teamName
                 if(p.country_id) p.country = await this.getCountryOfAplayer(p.country_id);
             }
             return players

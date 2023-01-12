@@ -58,6 +58,23 @@ class TeamService extends BaseService{
         }
     }
 
+        async getTeamsByLeague(league){
+        try {
+            let teams = await this.teamsBusiness.getTeamsByLeague(league)
+            if(teams.error) throw teams
+            let leagueName = await this.getLeagueOfATeamById(league);
+            for (const t of teams) {
+                if(t.country_id) t.team = await this.getCountryOfATeamById(t.country_id);
+                t.league = leagueName
+            }
+            return teams
+        } catch (error) {
+            return error
+        }
+    }
+
+
+
 
     async create(body){
         try {

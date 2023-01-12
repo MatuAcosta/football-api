@@ -6,7 +6,7 @@ class PlayerBusiness extends BaseBusiness {
         super(playerRepository,PlayerDomain);
         this.playerRepository = playerRepository;
     }
-   async getPlayersByName(team){
+   async getPlayersByTeam(team){
     try {
         let entity = await this.playerRepository.getPlayersByTeam(team);
         if(entity.error) throw entity
