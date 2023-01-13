@@ -2,7 +2,7 @@ class LeagueDTO {
     constructor(){
         this.id = 0
         this.name = ""
-        //this.logo = ""
+        this.logo = ""
         this.country = ""
     }
 }
