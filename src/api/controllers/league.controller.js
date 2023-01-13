@@ -16,7 +16,7 @@ class LeagueController {
             console.log(leagues)
             for (const l of leagues) {
                 let base64 = l.logo.toString('base64');
-                l.logo = base64;            
+                l.logo = 'data:image/jpeg;base64,' + base64;            
             }
             leagues = leagues.map(l => mapper(LeagueDTO,l))
             return res.status(200).send({
