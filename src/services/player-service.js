@@ -10,8 +10,8 @@ class PlayerService extends BaseService{
 
     calculateAge(fecha){
        let today = new Date();
-       fecha = moment([fecha.getFullYear(),fecha.getMonth(),fecha.getDay()])
-       let diferencia = moment([today.getFullYear(),today.getMonth(),today.getDay()]);
+       fecha = moment([fecha.getFullYear(),fecha.getMonth() + 1 ,fecha.getDate()])
+       let diferencia = moment([today.getFullYear(),today.getMonth() + 1,today.getDate()]);
        return diferencia.diff(fecha,'years') 
     }
 
