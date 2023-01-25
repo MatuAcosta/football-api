@@ -12,11 +12,16 @@ module.exports = function({playersRoute,teamsRoute,countryRoute,leagueRoute,sear
         extended: true 
      }))
     .use(cors())
+    router.get('/',(req,res)=>{
+        return res.json({
+            message:'Realizando doc en Swagger'
+        })
+     })
     apiRoute.use('/search',searchRoute);
     apiRoute.use('/players', playersRoute);
     apiRoute.use('/teams',teamsRoute);
     apiRoute.use('/countries',countryRoute)
     apiRoute.use('/leagues',leagueRoute)
-    router.use('/',apiRoute);
+    router.use('/', apiRoute);
     return router;
 }
