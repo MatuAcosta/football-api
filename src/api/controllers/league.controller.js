@@ -57,7 +57,7 @@ class LeagueController {
             const id = req.params.id;
             const body = req.body;
             if(req.file){
-                const path = '/uploads/'+req.file.filename ; 
+                const path = './uploads/'+req.file.filename ; 
                 body.logo = this.readImage(path)
             }
             const updatedLeague = await this.leagueService.update(id,body);
