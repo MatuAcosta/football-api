@@ -66,11 +66,20 @@ class BaseRepository {
 
     }
     async getByName(name){
-        return await this.db[this.entity].findOne({
-            where:{
-                name
+        try {
+            let entity = await this.db[this.entity].findOne({
+                where:{
+                    name
+                }
+            });
+            return entity
+        } catch (error) {
+            return {
+                error: true,
+                detail: error.name
             }
-        })
+        }
+         
     }
 }
 

@@ -10,9 +10,17 @@ class CountryController {
     //solamente mostrar la data que queremos al usuario.
     async getCountries(req,res){
         try {
-            let countries = await this.countryService.getAll();
+            let countries;
+            if(req.query && req.query.name) {
+                countries = await this.countryService.getByName(req.query.name)
+            }else{
+                countries = await this.countryService.getAll();
+            }
+            if(!countries) throw {code: 200, msg: 'Country not found'}
             if(countries.error) throw {code: 500, msg: countries.detail}
-            countries = countries.map(p => mapper(CountryDTO,p))
+            !req.query //if true, then query is false and countries is an Array, if not is just a Country
+            ? countries = countries.map(p => mapper(CountryDTO,p))
+            : countries = mapper(CountryDTO,countries);
             return res.status(200).send({
                 message:'Countries',
                 data:countries
@@ -85,7 +93,6 @@ class CountryController {
             })
         }
     }
-
 
 }
 

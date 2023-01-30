@@ -55,6 +55,7 @@ class BaseService {
     }
     async getByName(name){
         try {
+            name = name.toUpperCase();
             const entity = await this.entityBusiness.getByName(name);
             return entity
         } catch (error) {

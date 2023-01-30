@@ -67,7 +67,9 @@ class TeamController {
         try {
             const id = req.params.id;
             const body = req.body;
-            console.log("BODYYY",req.body);
+            if(req.file){
+                body.logo = req.file.path;
+            }
             const updatedTeam = await this.teamsService.update(id,body);
             return res.status(201).send({
                 message: 'Updated team',
