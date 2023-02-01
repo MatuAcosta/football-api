@@ -37,6 +37,7 @@ class BaseService {
     }
     async update(id,entity){
         try {
+            if(entity.name) entity.name = entity.name.toUpperCase();
             const updatedEntity =  await this.entityBusiness.update(id,entity);
             return updatedEntity;
         } catch (error) {

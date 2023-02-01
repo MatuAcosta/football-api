@@ -34,7 +34,6 @@ class CountryController {
     async createCountry(req,res){
         try {
             const body = req.body;
-            if(body.name) body.name = body.name.toUppercase();
             const createdCountry = await this.countryService.create(body);
             return res.status(201).send({
                 message: 'Country created',
@@ -49,7 +48,6 @@ class CountryController {
         try {
             const id = req.params.id;
             const body = req.body;
-            if(body.name) body.name = body.name.toUppercase();
             const updatedCountry = await this.countryService.update(id,body);
             return res.status(201).send({
                 message: 'Updated Country',
