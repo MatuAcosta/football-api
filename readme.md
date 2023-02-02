@@ -19,7 +19,6 @@ Football-API was deployed on render.com
 
 - /leagues  
     - /id
-    - /country/
 - /players
     - /id
     - /team/{teamname}
