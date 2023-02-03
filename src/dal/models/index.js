@@ -10,8 +10,8 @@ const db = {};
 
 //EXTERNO - INTERNO - LOCALHOST
 //para deploy descomentar interno 
-//const sequelize = new Sequelize('postgres://matias:KIkEhHgp2M2pP4CZXAfiMkIsfcc6iM1X@dpg-ceuu5pta4993aigc6350-a.oregon-postgres.render.com:5432/footballapi?ssl=true') // Example for postgres
-const sequelize = new Sequelize('postgres://matias:KIkEhHgp2M2pP4CZXAfiMkIsfcc6iM1X@dpg-ceuu5pta4993aigc6350-a/footballapi')
+//const sequelize = new Sequelize(proccess.env.DB_URL_EXT) // Example for postgres
+const sequelize = new Sequelize(process.env.DB_URL_INT)
 //const sequelize = new Sequelize(config.database, config.username, config.password, config);
 fs
   .readdirSync(__dirname)
@@ -31,6 +31,7 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.roles = ['admin','user'];
 
 async function  doIt(){
   try {
